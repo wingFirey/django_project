@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+   {% for patient in patients %}
+      <h1> Submmited by {{patient.user}}</h1>
+      <p> Patient Name: {{patient.patient_name}}</p>
+      <p> Patient ID: {{patient.patient_ID}}</p>
+      <p> Patient Age: {{patient.patient_age}}</p>
+      <p> Patient Issue: {{patient.patient_issue}}</p>
+      <p> Other Details:{{patient.other_details}}</p>
+      {% if patient.patient_file %}
+      <p> Image Uploaded:<img src=' {{ patient.patient_file.url }}' class = 'img-responsive' /></p>
+      {% endif %}
+      <p> Submitted on {{patient.date}}</p>
+   {% endfor %}	
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %} 
+   <form action = "finalview.html" method="post">
+      {% csrf_token %}
+      <br>
+      <br>
+      Enter the Patient ID you need to view:<br>
+      <input type="text" name = "search_query"></input>
+      <button type = "submit" >Submit</button>
+   </form>
+   <br>
+   <br>
+   <a href = "details.html"> Show every Patient detail</a>
+{% endblock %}
