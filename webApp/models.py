@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
@@ -28,12 +27,4 @@ class Patient(models.Model):
 
 
    def __str__(self):
-      return self.patient_ID
-
-
-
-
-
-
-
-
+     return self.patient_ID

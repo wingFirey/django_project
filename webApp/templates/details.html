@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-   {% for patient in patients %}
+   {% for patient in patient_list %}
       <h1> Submmited by {{patient.user}}</h1>
       <p> Patient Name: {{patient.patient_name}}</p>
       <p> Patient ID: {{patient.patient_ID}}</p>

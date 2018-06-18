@@ -2,17 +2,16 @@
 from __future__ import unicode_literals
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render,redirect,get_object_or_404
-
+import json
+from django.shortcuts import render_to_response
 # Create your views here.
 from django.views.generic import TemplateView
 from .models import Patient
-from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.http import HttpResponse,Http404,HttpResponseRedirect,JsonResponse
 from webApp.forms import PatientForm
 from django.contrib.auth.models import User
+from django.core import serializers
 
-class PatientUpdate(UpdateView):
-   model = Patient
-   fields = ['patient_name','patient_ID','patient_age','patient_issue','other_details',]
 
 def edit(request):
    if not request.user.is_authenticated():
@@ -30,9 +29,13 @@ def detail(request):
    else:
       form = PatientForm()
       patients = Patient.objects.all()
+      patient_list = list(patients)
       print(patients)
       args = {'form':form,'patients':patients}
-      return render(request,'details.html',args)
+      #return render(request,'details.html',args)
+      data = serializers.serialize('json',patient_list)
+      #return JsonResponse(data,self = False)
+      return JsonResponse(data,safe = False)
   
 
 def index(request):
@@ -64,9 +67,15 @@ def final_edit(request,id = None):
          instance = form.save(commit=False) 
          instance.user = request.user      
          instance.save()
-         return render(request,'updated.html',{})      
+         #return JsonResponse(serializers.serialize('json',[instance]),safe = False)
+         return render(request,'updated.html',{})
+               
       args = {'instance':instance,'form':form,}
+      #data = serializers.serialize('json',args)
+      data = json.dumps(serializers.serialize('json',[instance,]))
+      print data
       return render(request,'final_edit.html',args)
+      #return JsonResponse(data,safe = False)
 
 
 def view(request):
@@ -86,7 +95,8 @@ def view(request):
             print i.patient_name
       print ('hi there')
       args = {'form':form,'patient':patient}
-      return render(request,'finalview.html',args)
+      data = serializers.serialize('json',[patient, ])
+      return JsonResponse(data,safe = False)
   
 
 def register(request):
@@ -111,17 +121,22 @@ def register(request):
          
          form = PatientForm()         
          return redirect('submitted.html')
-      args = {'form':form,'patient_name':patient_name,'patient_ID':patient_ID,'patient_age':patient_age,'patient_issue':patient_issue,'other_details':other_details}
-      return render(request,'register.html',args)
+      args = {'patient_name':patient_name,'patient_ID':patient_ID,'patient_age':patient_age,'patient_issue':patient_issue,'other_details':other_details}
+      k = args.cleaned_data
+      data = serializers.serialize('json',k)
+      print data
+      return JsonResponse(data,self = False)
    else:
       form = PatientForm()
       #patients = Patient.objects.all()
       #print('hey')
      # print(patients)
      # args = {'form':form,'patients':patients}
+      #return JsonResponse(serializers.serialize('json',{'form':form}),self= False)
       return render(request,'register.html',{'form':form})
 
 
 
 
    
+

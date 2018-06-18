@@ -1,6 +1,7 @@
 from django import forms
 from webApp.models import Patient
 from django.contrib.auth.models import User
+from splitjson.widgets import SplitJSONWidget
 
 class PatientForm(forms.ModelForm):
    patient_name = forms.CharField(max_length= 20)
@@ -13,5 +14,9 @@ class PatientForm(forms.ModelForm):
    class Meta:
       model = Patient
       fields ='__all__'
+   
 
-
+  # attrs  ={'class':'special','size':'40'}
+  # data = forms.CharField(widget=SplitJSONWidget(attrs=attrs,debug=True))
+   
+  

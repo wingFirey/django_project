@@ -2,16 +2,16 @@
 
 {% block content %}
       <h1> Thanks for your time!</h1>
-      <p>Username: {{ patient }}</p>
-      <p> Patient Name: {{ patient.patient_name }}</p>
-      <p> Patient ID: {{ patient.patient_ID }}</p>
-      <p> Patient Age: {{ patient.patient_age }}</p>
-      <p> Patient Issue: {{ patient.patient_issue }}</p>
-      <p> Other Details:{{ patient.other_details }}</p>
-      {% if patient.patient_file %}
+      <p>Username: {{ data }}</p>
+      <p> Patient Name: {{ data.patient_name }}</p>
+      <p> Patient ID: {{ data.patient_ID }}</p>
+      <p> Patient Age: {{ data.patient_age }}</p>
+      <p> Patient Issue: {{ data.patient_issue }}</p>
+      <p> Other Details:{{ data.other_details }}</p>
+      {% if data.patient_file %}
       <p> Image Uploaded:<img src=' {{ patient.patient_file.url }}' class = 'img-responsive' /></p>
       {% endif %}
-      <p> Submitted on {{ patient.date }}</p>
+      <p> Submitted on {{ data.date }}</p>
      
   
  <!-- 
